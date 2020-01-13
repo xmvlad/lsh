@@ -12,6 +12,7 @@ limitations, including:
 * No quoting arguments or escaping whitespace.
 * No piping or redirection.
 * Only builtins are: `cd`, `help`, `exit`.
+* Added bultin: `ls`
 
 Contributing
 ------------
