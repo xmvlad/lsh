@@ -9,6 +9,17 @@
   @brief        LSH (Libstephen SHell)
 
 *******************************************************************************/
+/***************************************************************************//**
+
+  @file         main.c
+
+  @author       Stephen Brennan
+
+  @date         Thursday,  8 January 2015
+
+  @brief        LSH (Libstephen SHell)
+
+*******************************************************************************/
 
 #include <sys/wait.h>
 #include <sys/types.h>
@@ -25,6 +36,7 @@ int lsh_cd(char **args);
 int lsh_help(char **args);
 int lsh_exit(char **args);
 int lsh_ls(char **args);
+int lsh_pwd(char **args);
 
 /*
   List of builtin commands, followed by their corresponding functions.
@@ -33,14 +45,16 @@ char *builtin_str[] = {
   "cd",
   "help",
   "exit",
-  "ls"
+  "ls",
+  "pwd",
 };
 
 int (*builtin_func[]) (char **) = {
   &lsh_cd,
   &lsh_help,
   &lsh_exit,
-  &lsh_ls
+  &lsh_ls,
+  &lsh_pwd
 };
 
 int lsh_num_builtins() {
@@ -99,6 +113,19 @@ int lsh_ls(char** args)
     }
     closedir(d);
   }
+  return 1;
+}
+
+int lsh_pwd(char **args)
+{    
+  char cwd[PATH_MAX];
+
+  if (getcwd(cwd, sizeof(cwd)) != NULL)   {
+    printf("%s\n", cwd);
+  } else {
+    perror("lsh");
+  }
+
   return 1;
 }
 
